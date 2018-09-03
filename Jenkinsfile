@@ -12,3 +12,5 @@ agent any
                       archiveArtifacts artifacts: 'output/archived-output.zip' //output will be in output/archived-output.zip
             }
 }
+       }
+}
