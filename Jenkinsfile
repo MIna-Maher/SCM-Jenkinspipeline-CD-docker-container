@@ -11,6 +11,5 @@ agent any
                          sh "zip output/archived-output.zip *"
                       archiveArtifacts artifacts: 'output/archived-output.zip' //output will be in output/archived-output.zip
             }
-}
+        }
        }
-}
