@@ -34,9 +34,9 @@ agent any
                                     sshTransfer(
                                         sourceFiles: 'output/archived-output.zip',
                                     //    removePrefix: 'output/',
-                                        remoteDirectory: '/tmp'
+                                        remoteDirectory: '/tmp',
                                     
-execCommand: 'sudo unzip /tmp/output/archived-output.zip -d /tmp/output/ && sudo chown -R jenkins:jenkins /home/jenkins/Dockervolume && sudo rm -rf /home/jenkins/Dockervolume/index.html && sudo mv /tmp/output/index.html /home/jenkins/Dockervolume/ && sudo rm -rf /tmp/output/'
+                                  execCommand: 'sudo unzip /tmp/output/archived-output.zip -d /tmp/output/ && sudo chown -R jenkins:jenkins /home/jenkins/Dockervolume && sudo rm -rf /home/jenkins/Dockervolume/index.html && sudo mv /tmp/output/index.html /home/jenkins/Dockervolume/ && sudo rm -rf /tmp/output/'
                                
                                  )
                                ]
