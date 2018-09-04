@@ -1,2 +1,2 @@
 # SCM-Jenkinspipeline-CD-docker-container
-Automated CI /CD through Jenkins pipeline to docker Container in production
+Automated Continous Integration / Continous Deployment to production Web Server through Jenkins Pipeline.
