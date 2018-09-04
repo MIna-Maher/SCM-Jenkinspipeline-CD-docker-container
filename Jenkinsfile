@@ -38,12 +38,33 @@ agent any
                                     
                                   execCommand: 'sudo unzip /tmp/output/archived-output.zip -d /tmp/output/ && sudo chown -R jenkins:jenkins /home/jenkins/Dockervolume && sudo rm -rf /home/jenkins/Dockervolume/index.html && sudo mv /tmp/output/index.html /home/jenkins/Dockervolume/ && sudo rm -rf /tmp/output/'
                                
-                                 )
-                               ]
-                                   
+                                    
+                                    )
+                                ]
                             )
                         ]
                     )
+                }
+            }
+}
+              
+               stage('DeployToProduction Server to Docker Container') {
+            when {
+                branch 'master'
+            }
+            steps {
+                input 'Do You want to deploy to production Web Container?'
+                milestone(1)
+                withCredentials([usernamePassword(credentialsId: 'web_login', usernameVariable: 'USERNAME', passwordVariable: 'USERPASS')]) {
+                    script {
+                        sh "sshpass -p '$USERPASS' -v ssh -o StrictHostKeyChecking=no $USERNAME@$prod_ip \"sudo docker pull minamaherdocker/docker-web-farm:v1\""
+                        try {
+                            sh "sshpass -p '$USERPASS' -v ssh -o StrictHostKeyChecking=no $USERNAME@$prod_ip \"sudo docker rm --force web-production\""
+                        } catch (err) {
+                            echo: 'caught error: $err'
+                        }
+                        sh "sshpass -p '$USERPASS' -v ssh -o StrictHostKeyChecking=no $USERNAME@$prod_ip \"sudo docker run -itd --name web-production -p 80:80 -v /home/jenkins/Dockervolume/:/var/www/html minamaherdocker/docker-web-farm:v1 /bin/bash\""
+                    }
                 }
             }
         }
